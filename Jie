@@ -1,0 +1,69 @@
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+
+
+class MyLinkedList:
+
+    def __init__(self):
+        self._head = Node(0)  # 虚拟头部节点
+        self._count = 0  # 添加的节点数
+
+    def get(self, index: int) -> int:
+        """
+        Get the value of the index-th node in the linked list. If the index is invalid, return -1.
+        """
+        if 0 <= index < self._count:
+            node = self._head
+            #print('====node list:')
+            for _ in range(index + 1):
+                #print(node.val)
+                node = node.next
+            return node.val
+        else:
+            return -1
+
+    def addAtHead(self, val: int) -> None:
+        newnode = Node(val)
+        newnode.next = self._head.next
+        self._head.next = newnode
+        self._count += 1
+      
+
+    def addAtTail(self, val: int) -> None:
+        newnode2 = Node(val)
+        cur = self._head
+        while cur.next != None:
+            cur = cur.next
+        cur.next = newnode2
+        self._count += 1
+
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        newnode3 = Node(val)        
+        if index < 0:
+            index = 0
+        elif index > self._count:
+            return
+        self._count += 1
+        prev, cur = None, self._head
+        for _ in range(index+1):
+            prev, cur = cur, cur.next
+        else: 
+            prev.next, newnode3.next = newnode3, cur
+
+
+                                                                                        
+    def deleteAtIndex(self, index: int) -> None:
+        if index < 0:
+            index = 0
+        elif index >= self._count:
+            return
+
+        prev, cur = None, self._head
+        for _ in range(index+1):
+            prev, cur = cur, cur.next
+        else:
+            prev.next, cur.next = cur.next, None
+        self._count -= 1
